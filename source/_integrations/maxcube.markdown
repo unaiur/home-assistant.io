@@ -21,6 +21,7 @@ Limitations:
 
 - Configuring weekly schedules is not possible.
 - Implementation is based on the reverse engineered [MAX! protocol](https://github.com/Bouni/max-cube-protocol).
+- MAX! Cube is locked in exclusive and you cannot use any other software to access the cube unless manually shared. See configuration options to enable shared mode.
 
 Supported Devices:
 
@@ -62,12 +63,19 @@ maxcube:
     required: false
     type: integer
     default: 62910
+  shared:
+    description: Allows to share the MAX! Cube with other software. The MAX! Cube hardware is not designed to run in this mode; [factory resets has been reported while operating in shared mode](https://github.com/hackercowboy/python-maxcube-api/issues/12). 
+    required: false
+    type: boolean
+    default: False
   scan_interval:
     description: The update interval in seconds
     required: false
     type: integer
     default: 300
+    
 {% endconfiguration %}
+
 
 ### Problems connecting or setting up 
 
