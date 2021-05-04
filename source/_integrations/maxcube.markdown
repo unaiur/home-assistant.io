@@ -66,7 +66,7 @@ maxcube:
     type: integer
     default: 62910
   scan_interval:
-    description: The update interval in seconds
+    description: The update interval in seconds. It also determines the connection mode: when configured to 300 or less, it uses a persistent connection.
     required: false
     type: integer
     default: 300
@@ -77,3 +77,11 @@ maxcube:
 Due to the connection limits of the eQ-3 MAX! Cube, Home Assistant will not be able to connect to the gateway if another application is still connected. It may result in timeout errors like _Error: timed out You will need to restart Home Assistant after fixing._ and  _The following integrations and platforms could not be set up: maxcube Please check your configuration._
 
 To prevent these issues, ensure all other applications connecting to the gateway are closed, e.g., the mobile app or the MAX! desktop app (On Windows machines, close from the status bar, it keeps running when you close the browser window).
+
+### Persistent connections
+
+The eQ-3 MAX! Cube has a hardware bug that causes random factory resets when connecting and disconnecting too fast. See [this issue](https://github.com/hackercowboy/python-maxcube-api/issues/12) for details about it.
+
+This integration uses a persistent connection when the scan_interval is configured to 300 seconds or less to reduce the chances of triggering that bug.
+
+Since the eQ-3 MAX! Cube does not support more than one connection, it means you cannot use other software at the same time. The workaround is to raise the scan_interval or stop Home Assistant if you want to connect other software to your eQ-3 MAX! Cube.
